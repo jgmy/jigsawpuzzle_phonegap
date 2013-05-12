@@ -1823,7 +1823,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 	};
 	GLWrap_.prototype.estimateVRAM = function ()
 	{
-		var total = 0;
+		var total = this.width * this.height * 4 * 2;
 		var i, len, t;
 		for (i = 0, len = all_textures.length; i < len; i++)
 		{
@@ -1885,6 +1885,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 		this.isWindows = /windows/i.test(navigator.userAgent);
 		this.isNodeWebkit = (typeof window["c2nodewebkit"] !== "undefined");
 		this.isArcade = (typeof window["is_scirra_arcade"] !== "undefined");
+		this.isWindows8App = !!(typeof window["c2isWindows8"] !== "undefined" && window["c2isWindows8"]);
 		this.devicePixelRatio = 1;
 		this.isMobile = (this.isPhoneGap || this.isAppMobi || this.isCocoonJs || this.isAndroid || this.isiOS);
 		if (!this.isMobile)
@@ -2122,13 +2123,18 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			this.overlay_ctx = null;
 		}
 		this.tickFunc = function () { self.tick(); };
-		if (!this.isDomFree)
+		this.hasFocusedOnce = false;
+		if (!this.isDomFree && !this.isWindows8App)
 		{
 			document.addEventListener("mousedown", function () {
-				window.focus();
+				if (!self.hasFocusedOnce)
+					window.focus();
+				self.hasFocusedOnce = true;
 			}, true);
 			document.addEventListener("touchstart", function () {
-				window.focus();
+				if (!self.hasFocusedOnce)
+					window.focus();
+				self.hasFocusedOnce = true;
 			}, true);
 		}
 		if (typeof cr_is_preview !== "undefined")
@@ -4486,6 +4492,22 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 		o["system"] = this.system.saveToJSON();
 		return JSON.stringify(o);
 	};
+	Runtime.prototype.refreshUidMap = function ()
+	{
+		var i, len, type, j, lenj, inst;
+		this.objectsByUid = {};
+		for (i = 0, len = this.types_by_index.length; i < len; i++)
+		{
+			type = this.types_by_index[i];
+			if (type.is_family)
+				continue;
+			for (j = 0, lenj = type.instances.length; j < lenj; j++)
+			{
+				inst = type.instances[j];
+				this.objectsByUid[inst.uid.toString()] = inst;
+			}
+		}
+	};
 	Runtime.prototype.loadFromJSONString = function (str)
 	{
 		var o = JSON.parse(str);
@@ -4547,18 +4569,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			}
 		}
 		this.ClearDeathRow();
-		this.objectsByUid = {};
-		for (i = 0, len = this.types_by_index.length; i < len; i++)
-		{
-			type = this.types_by_index[i];
-			if (type.is_family)
-				continue;
-			for (j = 0, lenj = type.instances.length; j < lenj; j++)
-			{
-				inst = type.instances[j];
-				this.objectsByUid[inst.uid.toString()] = inst;
-			}
-		}
+		this.refreshUidMap();
 		var olayouts = o["layouts"];
 		for (p in olayouts)
 		{
@@ -5019,6 +5030,7 @@ window["cr_setSuspended"] = function(s)
 			}
 			layer.rotateViewport(px, py, null);
 		}
+		var uids_changed = false;
 		if (!this.first_visit)
 		{
 			for (p in this.persist_data)
@@ -5040,6 +5052,7 @@ window["cr_setSuspended"] = function(s)
 						}
 						inst = this.runtime.createInstanceFromInit(type.default_instance, layer, false, 0, 0, true);
 						this.runtime.loadInstanceFromJSON(inst, type_data[i]);
+						uids_changed = true;
 						created_instances.push(inst);
 					}
 					type_data.length = 0;
@@ -5050,6 +5063,11 @@ window["cr_setSuspended"] = function(s)
 				this.layers[i].instances.sort(sortInstanceByZIndex);
 				this.layers[i].zindices_stale = true;		// in case of duplicates/holes
 			}
+		}
+		if (uids_changed)
+		{
+			this.runtime.ClearDeathRow();
+			this.runtime.refreshUidMap();
 		}
 		for (i = 0; i < created_instances.length; i++)
 		{
@@ -5703,12 +5721,23 @@ window["cr_setSuspended"] = function(s)
 	};
 	Layer.prototype.createInitialInstances = function ()
 	{
-		var i, k, len, inst;
+		var i, k, len, inst, initial_inst, type, keep, hasPersistBehavior;
 		for (i = 0, k = 0, len = this.initial_instances.length; i < len; i++)
 		{
-			inst = this.runtime.createInstanceFromInit(this.initial_instances[i], this, true);
-			created_instances.push(inst);
-			if (inst && !inst.type.global && !this.runtime.typeHasPersistBehavior(inst.type))
+			initial_inst = this.initial_instances[i];
+			type = this.runtime.types_by_index[initial_inst[1]];
+;
+			hasPersistBehavior = this.runtime.typeHasPersistBehavior(type);
+			keep = true;
+			if (!hasPersistBehavior || this.layout.first_visit)
+			{
+				inst = this.runtime.createInstanceFromInit(initial_inst, this, true);
+;
+				created_instances.push(inst);
+				if (inst.type.global)
+					keep = false;
+			}
+			if (keep)
 			{
 				this.initial_instances[k] = this.initial_instances[i];
 				k++;
@@ -9431,6 +9460,13 @@ cr.system_object.prototype.loadFromJSON = function (o)
 	SysExps.prototype.savestatejson = function (ret)
 	{
 		ret.set_string(this.runtime.lastSaveJson);
+	};
+	SysExps.prototype.imagememoryusage = function (ret)
+	{
+		if (this.runtime.glwrap)
+			ret.set_float(Math.round(100 * this.runtime.glwrap.estimateVRAM() / (1024 * 1024)) / 100);
+		else
+			ret.set_float(0);
 	};
 	sysProto.exps = new SysExps();
 	sysProto.runWaits = function ()
@@ -19265,6 +19301,22 @@ cr.getProjectModel = function() { return [
 		[]
 		,[0,1,1,600,600,10000,1,5000,1]
 	]
+,	[
+		"t29",
+		cr.plugins_.Text,
+		false,
+		[],
+		0,
+		0,
+		null,
+		null,
+		[
+		],
+		false,
+		false,
+		1276486188614244,
+		[]
+	]
 	],
 	[
 	],
@@ -19546,7 +19598,7 @@ cr.getProjectModel = function() { return [
 				]
 			]
 ,			[
-				[1, 1, 0, 137, 30, 0, 0, 1, 0, 0, 0, 0, []],
+				[1, 1, 0, 153, 30, 0, 0, 1, 0, 0, 0, 0, []],
 				27,
 				33,
 				[
@@ -19561,6 +19613,26 @@ cr.getProjectModel = function() { return [
 					0,
 					0,
 					0,
+					0,
+					0
+				]
+			]
+,			[
+				[321, 233, 0, 200, 30, 0, 0, 1, 0.5, 0.5, 0, 0, []],
+				29,
+				35,
+				[
+				],
+				[
+				],
+				[
+					"",
+					1,
+					"12pt Arial",
+					"rgb(0,0,0)",
+					0,
+					0,
+					1,
 					0,
 					0
 				]
@@ -23860,26 +23932,19 @@ false,false,116
 								]
 							]
 ,							[
-								-1,
-								cr.system_object.prototype.acts.SetVar,
+								29,
+								cr.plugins_.Text.prototype.acts.SetVisible,
 								null,
-								584637843844946
+								471323405648844
 								,[
 								[
-									11,
-									"PlayforTime"
-								]
-,								[
-									7,
-									[
-										0,
-										2
-									]
+									3,
+									1
 								]
 								]
 							]
 ,							[
-								27,
+								29,
 								cr.plugins_.Text.prototype.acts.SetPos,
 								null,
 								2659037806702898
@@ -23924,7 +23989,7 @@ false,false,116
 								]
 							]
 ,							[
-								27,
+								29,
 								cr.plugins_.Text.prototype.acts.SetText,
 								null,
 								5422735978513761
@@ -23932,18 +23997,120 @@ false,false,116
 								[
 									7,
 									[
-										10,
+										18,
 										[
-											2,
-											"You complete it in "
+											12,
+											[
+												23,
+												"PlayforTime"
+											]
+											,[
+												0,
+												1
+											]
 										]
 										,[
-											20,
-											27,
-											cr.plugins_.Text.prototype.exps.Text,
-											true,
-											null
+											2,
+											"You started from un-shuffled puzzle"
 										]
+										,[
+											10,
+											[
+												10,
+												[
+													10,
+													[
+														10,
+														[
+															10,
+															[
+																2,
+																"You complete it in "
+															]
+															,[
+																19,
+																cr.system_object.prototype.exps["int"]
+																,[
+[
+																	7,
+																	[
+																		23,
+																		"EllapsedTime"
+																	]
+																	,[
+																		0,
+																		3600
+																	]
+																]
+																]
+															]
+														]
+														,[
+															2,
+															":"
+														]
+													]
+													,[
+														8,
+														[
+															19,
+															cr.system_object.prototype.exps["int"]
+															,[
+[
+																7,
+																[
+																	23,
+																	"EllapsedTime"
+																]
+																,[
+																	0,
+																	60
+																]
+															]
+															]
+														]
+														,[
+															0,
+															60
+														]
+													]
+												]
+												,[
+													2,
+													":"
+												]
+											]
+											,[
+												8,
+												[
+													23,
+													"EllapsedTime"
+												]
+												,[
+													0,
+													60
+												]
+											]
+										]
+									]
+								]
+								]
+							]
+,							[
+								-1,
+								cr.system_object.prototype.acts.SetVar,
+								null,
+								584637843844946
+								,[
+								[
+									11,
+									"PlayforTime"
+								]
+,								[
+									7,
+									[
+										0,
+										2
 									]
 								]
 								]
@@ -24090,11 +24257,11 @@ false,false,116
 						]
 						,[
 							0,
-							1
+							0
 						]
 						,[
 							0,
-							0
+							1
 						]
 					]
 				]
@@ -24788,24 +24955,14 @@ false,false,116
 				]
 			]
 ,			[
-				27,
-				cr.plugins_.Text.prototype.acts.SetPos,
+				29,
+				cr.plugins_.Text.prototype.acts.SetVisible,
 				null,
-				2110023217412446
+				889273811881197
 				,[
 				[
-					0,
-					[
-						0,
-						1
-					]
-				]
-,				[
-					0,
-					[
-						0,
-						1
-					]
+					3,
+					0
 				]
 				]
 			]
@@ -27974,7 +28131,7 @@ false,false,446
 	true,
 	0,
 	false,
-	35,
+	36,
 	false,
 	[
 		[2,25]

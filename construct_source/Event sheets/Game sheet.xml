@@ -1,0 +1,1173 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Game sheet</name>
+    <events>
+        <comment>Ancho Sprite: 118 con margen, 79 sin margen</comment>
+        <comment>Matriz del sprite: 8 x 6</comment>
+        <variable comment="Group (to group pieces)" constant="0" name="GrupoAct" sid="107" static="0" type="number">0</variable>
+        <variable comment="Ellapsed Time in game" constant="0" name="EllapsedTime" sid="3297835130157265" static="0" type="number">0</variable>
+        <variable comment="1 if beginning from shuffle (i.e. we&apos;ll meter time)" constant="0" name="PlayforTime" sid="2004016869081186" static="0" type="number">0</variable>
+        <variable comment="Space separated list of piece groups to being joined together" constant="0" name="Joingroups" sid="251" static="0" type="text">&quot;&quot;</variable>
+        <variable constant="0" name="JoinMe" sid="259" static="0" type="number">0</variable>
+        <variable comment="PosicionX of currently moving Canvas" constant="0" name="MovX" sid="50" static="0" type="number">0</variable>
+        <variable comment="PosicionY of currently moving Canvas" constant="0" name="MovY" sid="51" static="0" type="number">0</variable>
+        <variable comment="X of currently moving Canvas" constant="0" name="CmpX" sid="52" static="0" type="number">0</variable>
+        <variable comment="Y of currently moving Canvas" constant="0" name="CmpY" sid="53" static="0" type="number">0</variable>
+        <variable comment="Internal piece size (square part of piece) in pixels" constant="0" name="IntSz" sid="379" static="0" type="number">79</variable>
+        <variable comment="Max logical height, in pieces" constant="0" name="MaxY" sid="378" static="0" type="number">5</variable>
+        <variable comment="Piece set" constant="0" name="PieceSet" sid="380" static="0" type="text">8x6</variable>
+        <variable comment="Max logical width in pieces" constant="0" name="MaxX" sid="377" static="0" type="number">7</variable>
+        <variable comment='&quot;PinPoint&quot; pinned to this' constant="0" name="PinPointUID" sid="54" static="0" type="number">0</variable>
+        <comment>Start of layout: create pieces and its shadows</comment>
+        <event-block sid="21">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="22" type="System" />
+            </conditions>
+            <actions>
+                <action id="-9" name="Destroy" sid="23" type="PieceMask" />
+                <action id="-9" name="Destroy" sid="24" type="Pin" />
+                <action id="-9" name="Destroy" sid="25" type="Piece" />
+                <action id="-9" name="Destroy" sid="278" type="WinnerSprite" />
+                <action id="-27" name="Set effect enabled" sid="343" type="Dibujo">
+                    <param id="0" name="Mode">0</param>
+                    <param id="1" name="Effect">&quot;Sepia&quot;</param>
+                </action>
+                <action id="4" name="Set animation" sid="8388717822429154" type="ShadowButton">
+                    <param id="0" name="Animation">&quot;ShadowOff&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+                <action id="4" name="Set animation" sid="611656043271464" type="BkgButton">
+                    <param id="0" name="Animation">&quot;Fondo0&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+                <action id="4" name="Preload" sid="9010721631697806" type="Audio">
+                    <param id="0" name="Audio file">clic-clac</param>
+                </action>
+            </actions>
+            <sub-events>
+                <comment>Set MaxX, MaxY and IntSz according to piece set</comment>
+                <event-block sid="382">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="387" type="System">
+                            <param id="0" name="Variable">PieceSet</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">&quot;8x6&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="388" type="System">
+                            <param id="0" name="Variable">MaxX</param>
+                            <param id="1" name="Value">7</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="389" type="System">
+                            <param id="0" name="Variable">MaxY</param>
+                            <param id="1" name="Value">5</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="390" type="System">
+                            <param id="0" name="Variable">IntSz</param>
+                            <param id="1" name="Value">79</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="391">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="392" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="393" type="System">
+                            <param id="0" name="Variable">MaxX</param>
+                            <param id="1" name="Value">11</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="394" type="System">
+                            <param id="0" name="Variable">MaxY</param>
+                            <param id="1" name="Value">8</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="395" type="System">
+                            <param id="0" name="Variable">IntSz</param>
+                            <param id="1" name="Value">80</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="396" type="System">
+                            <param id="0" name="Variable">PieceSet</param>
+                            <param id="1" name="Value">&quot;12x9&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>Re-size image and center it</comment>
+                <event-block sid="385">
+                    <conditions />
+                    <actions>
+                        <action id="-7" name="Set size" sid="398" type="Dibujo">
+                            <param id="0" name="Width">IntSz*(MaxX+1)</param>
+                            <param id="1" name="Height">IntSz*(MaxY+1)</param>
+                        </action>
+                        <action id="-3" name="Set position" sid="386" type="Dibujo">
+                            <param id="0" name="X">100+(MaxX/2)*IntSz</param>
+                            <param id="1" name="Y">100+(MaxY/2)*IntSz</param>
+                        </action>
+                        <action id="-7" name="Scroll to position" sid="397" type="System">
+                            <param id="0" name="X">100+(MaxX/2)*IntSz</param>
+                            <param id="1" name="Y">100+(MaxY/2)*IntSz</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="26">
+                    <conditions>
+                        <condition id="-10" name="For" sid="27" type="System">
+                            <param id="0" name="Name">&quot;piezaY&quot;</param>
+                            <param id="1" name="Start index">0</param>
+                            <param id="2" name="End index">MaxY</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="28">
+                            <conditions>
+                                <condition id="-10" name="For" sid="29" type="System">
+                                    <param id="0" name="Name">&quot;piezaX&quot;</param>
+                                    <param id="1" name="Start index">0</param>
+                                    <param id="2" name="End index">MaxX</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-3" name="Create object" sid="30" type="System">
+                                    <param id="0" name="Object to create">PieceMask</param>
+                                    <param id="1" name="Layer">0</param>
+                                    <param id="2" name="X">loopindex(&quot;piezaX&quot;)*IntSz+100</param>
+                                    <param id="3" name="Y">loopindex(&quot;piezaY&quot;)*IntSz+100</param>
+                                </action>
+                                <action id="-3" name="Create object" sid="31" type="System">
+                                    <param id="0" name="Object to create">Piece</param>
+                                    <param id="1" name="Layer">0</param>
+                                    <param id="2" name="X">loopindex(&quot;piezaX&quot;)*IntSz+100</param>
+                                    <param id="3" name="Y">loopindex(&quot;piezaY&quot;)*IntSz+100</param>
+                                </action>
+                                <action id="7" name="Clear Canvas" sid="32" type="Piece" />
+                                <action id="-7" name="Set size" sid="33" type="Piece">
+                                    <param id="0" name="Width">PieceMask.Width</param>
+                                    <param id="1" name="Height">PieceMask.Height</param>
+                                </action>
+                                <action id="3" name="Resize canvas" sid="34" type="Piece">
+                                    <param id="0" name="width">self.Width</param>
+                                    <param id="1" name="height">self.Height</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="35" type="PieceMask">
+                                    <param id="0" name="Instance variable">placeX</param>
+                                    <param id="1" name="Value">loopIndex(&quot;piezaX&quot;)</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="36" type="PieceMask">
+                                    <param id="0" name="Instance variable">placeY</param>
+                                    <param id="1" name="Value">loopindex(&quot;piezaY&quot;)</param>
+                                </action>
+                                <action id="4" name="Set animation" sid="399" type="PieceMask">
+                                    <param id="0" name="Animation">PieceSet</param>
+                                    <param id="1" name="From">1</param>
+                                </action>
+                                <action id="5" name="Set frame" sid="37" type="PieceMask">
+                                    <param id="0" name="Frame number">(loopIndex(&quot;piezaY&quot;)*(MaxX+1))+loopIndex(&quot;piezaX&quot;)</param>
+                                </action>
+                                <action id="2" name="Stop" sid="40" type="PieceMask" />
+                                <action id="4" name="Paste Object" sid="38" type="Piece">
+                                    <param id="0" name="object">Dibujo</param>
+                                </action>
+                                <action id="4" name="Paste Object" sid="39" type="Piece">
+                                    <param id="0" name="object">PieceMask</param>
+                                </action>
+                                <action id="-9" name="Destroy" sid="41" type="PieceMask" />
+                                <action id="-10" name="Set value" sid="42" type="Piece">
+                                    <param id="0" name="Instance variable">placeX</param>
+                                    <param id="1" name="Value">loopIndex(&quot;piezaX&quot;)</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="43" type="Piece">
+                                    <param id="0" name="Instance variable">placeY</param>
+                                    <param id="1" name="Value">loopIndex(&quot;piezaY&quot;)</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="108" type="Piece">
+                                    <param id="0" name="Instance variable">Group</param>
+                                    <param id="1" name="Value">GrupoAct</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="130" type="Piece">
+                                    <param id="0" name="Instance variable">MiUID</param>
+                                    <param id="1" name="Value">GrupoAct</param>
+                                </action>
+                                <action id="-10" name="Add to" sid="195" type="System">
+                                    <param id="0" name="Variable">GrupoAct</param>
+                                    <param id="1" name="Value">1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <variable comment="Group of piece being dragged" constant="0" name="DrgGroup" sid="117" static="0" type="number">0</variable>
+        <variable comment="PlaceX of dragging piece" constant="0" name="DrgPlaceX" sid="118" static="0" type="number">0</variable>
+        <variable comment="PlaceY of piece being dragged" constant="0" name="DrgPlaceY" sid="119" static="0" type="number">0</variable>
+        <variable comment="Y  of piece being dragged" constant="0" name="DrgY" sid="121" static="0" type="number">0</variable>
+        <variable comment="X of piece being dragged" constant="0" name="DrgX" sid="120" static="0" type="number">0</variable>
+        <variable comment="MiUID of piece being dragged" constant="0" name="DrgPiece" sid="116" static="0" type="number">0</variable>
+        <comment>Piece moving. A &quot;pin&quot; is create and pinned to the piece. The rest of pieces in the group are pinned to the pin (so we don&apos;t have to locate the piece by ID, wich would cause other pieces to be un-picked).</comment>
+        <event-block sid="109">
+            <conditions>
+                <condition behavior="DragDrop" id="1" name="On drag start" sid="110" type="Piece" />
+            </conditions>
+            <actions>
+                <action id="-3" name="Create object" sid="111" type="System">
+                    <param id="0" name="Object to create">Pin</param>
+                    <param id="1" name="Layer">0</param>
+                    <param id="2" name="X">Piece.X</param>
+                    <param id="3" name="Y">Piece.Y</param>
+                </action>
+                <action behavior="Pin" id="0" name="Pin to object" sid="112" type="Pin">
+                    <param id="0" name="Pin to">Piece</param>
+                    <param id="1" name="Mode">0</param>
+                </action>
+                <action id="-24" name="Move to top" sid="134" type="Piece" />
+                <action id="-9" name="Set value" sid="122" type="System">
+                    <param id="0" name="Variable">DrgGroup</param>
+                    <param id="1" name="Value">Piece.Group</param>
+                </action>
+                <action id="-9" name="Set value" sid="123" type="System">
+                    <param id="0" name="Variable">DrgPiece</param>
+                    <param id="1" name="Value">Piece.MiUID</param>
+                </action>
+                <action id="-9" name="Set value" sid="124" type="System">
+                    <param id="0" name="Variable">DrgPlaceX</param>
+                    <param id="1" name="Value">Piece.placeX</param>
+                </action>
+                <action id="-9" name="Set value" sid="125" type="System">
+                    <param id="0" name="Variable">DrgPlaceY</param>
+                    <param id="1" name="Value">Piece.placeY</param>
+                </action>
+                <action id="-9" name="Set value" sid="126" type="System">
+                    <param id="0" name="Variable">DrgX</param>
+                    <param id="1" name="Value">Piece.X</param>
+                </action>
+                <action id="-9" name="Set value" sid="127" type="System">
+                    <param id="0" name="Variable">DrgY</param>
+                    <param id="1" name="Value">Piece.Y</param>
+                </action>
+                <action id="-9" name="Set value" sid="252" type="System">
+                    <param id="0" name="Variable">Joingroups</param>
+                    <param id="1" name="Value">&quot;&quot;</param>
+                </action>
+            </actions>
+            <sub-events>
+                <event-block any="1" sid="239">
+                    <conditions>
+                        <condition id="-1" name="Compare X" sid="240" type="Piece">
+                            <param id="0" name="Comparison">2</param>
+                            <param id="1" name="X co-ordinate">ViewportLeft(Piece.LayerName)+100</param>
+                        </condition>
+                        <condition id="-1" name="Compare X" sid="241" type="Piece">
+                            <param id="0" name="Comparison">4</param>
+                            <param id="1" name="X co-ordinate">ViewportRight(Piece.LayerName)-100</param>
+                        </condition>
+                        <condition id="-2" name="Compare Y" sid="242" type="Piece">
+                            <param id="0" name="Comparison">2</param>
+                            <param id="1" name="Y co-ordinate">ViewportTop(Piece.LayerName)+100</param>
+                        </condition>
+                        <condition id="-2" name="Compare Y" sid="243" type="Piece">
+                            <param id="0" name="Comparison">4</param>
+                            <param id="1" name="Y co-ordinate">ViewportBottom(Piece.LayerName)-100</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-8" name="Scroll to object" sid="244" type="System">
+                            <param id="0" name="Object">Piece</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="113">
+                    <conditions>
+                        <condition id="-19" name="Pick all" sid="114" type="System">
+                            <param id="0" name="Object">Piece</param>
+                        </condition>
+                        <condition id="-7" name="Compare instance variable" sid="115" type="Piece">
+                            <param id="0" name="Instance variable">Group</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">DrgGroup</param>
+                        </condition>
+                        <condition id="-7" name="Compare instance variable" sid="131" type="Piece">
+                            <param id="0" name="Instance variable">MiUID</param>
+                            <param id="1" name="Comparison">1</param>
+                            <param id="2" name="Value">DrgPiece</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action behavior="Pin" id="0" name="Pin to object" sid="132" type="Piece">
+                            <param id="0" name="Pin to">Pin</param>
+                            <param id="1" name="Mode">0</param>
+                        </action>
+                        <action id="-24" name="Move to top" sid="133" type="Piece" />
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="47">
+            <conditions>
+                <condition behavior="DragDrop" id="0" name="Is dragging" sid="48" type="Piece" />
+            </conditions>
+            <actions>
+                <action id="-24" name="Move to top" sid="49" type="Piece" />
+            </actions>
+        </event-block>
+        <comment>If a piece touches the right piece, touching pieces are moved to the dragged piece group</comment>
+        <event-block collapsed="1" sid="55">
+            <conditions>
+                <condition behavior="DragDrop" id="2" name="On drop" sid="56" type="Piece" />
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="135" type="System">
+                    <param id="0" name="Variable">DrgGroup</param>
+                    <param id="1" name="Value">Piece.Group</param>
+                </action>
+                <action id="-9" name="Set value" sid="136" type="System">
+                    <param id="0" name="Variable">DrgPiece</param>
+                    <param id="1" name="Value">Piece.MiUID</param>
+                </action>
+                <action id="-9" name="Set value" sid="137" type="System">
+                    <param id="0" name="Variable">DrgPlaceX</param>
+                    <param id="1" name="Value">Piece.placeX</param>
+                </action>
+                <action id="-9" name="Set value" sid="138" type="System">
+                    <param id="0" name="Variable">DrgPlaceY</param>
+                    <param id="1" name="Value">Piece.placeY</param>
+                </action>
+                <action id="-9" name="Set value" sid="139" type="System">
+                    <param id="0" name="Variable">DrgX</param>
+                    <param id="1" name="Value">Piece.X</param>
+                </action>
+                <action id="-9" name="Set value" sid="140" type="System">
+                    <param id="0" name="Variable">DrgY</param>
+                    <param id="1" name="Value">Piece.Y</param>
+                </action>
+                <action id="-9" name="Destroy" sid="189" type="Pin" />
+                <action id="1" name="Append text" sid="194" type="DebugText">
+                    <param id="0" name="Text">DrgGroup &amp; &quot;&quot; &amp;newline</param>
+                </action>
+            </actions>
+            <sub-events>
+                <event-block sid="205">
+                    <conditions>
+                        <condition id="-19" name="Pick all" sid="206" type="System">
+                            <param id="0" name="Object">Piece</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="141">
+                            <conditions>
+                                <condition id="-19" name="Pick all" sid="222" type="System">
+                                    <param id="0" name="Object">Piece</param>
+                                </condition>
+                                <condition id="-11" name="For Each" sid="142" type="System">
+                                    <param id="0" name="Object">Piece</param>
+                                </condition>
+                                <condition id="-7" name="Compare instance variable" sid="143" type="Piece">
+                                    <param id="0" name="Instance variable">Group</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">DrgGroup</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="144" type="System">
+                                    <param id="0" name="Variable">MovX</param>
+                                    <param id="1" name="Value">Piece.placeX</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="145" type="System">
+                                    <param id="0" name="Variable">MovY</param>
+                                    <param id="1" name="Value">Piece.placeY</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="171" type="System">
+                                    <param id="0" name="Variable">CmpX</param>
+                                    <param id="1" name="Value">Piece.X</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="172" type="System">
+                                    <param id="0" name="Variable">CmpY</param>
+                                    <param id="1" name="Value">Piece.Y</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <comment>Busca la pieza de encima</comment>
+                                <event-block sid="146">
+                                    <conditions>
+                                        <condition id="-19" name="Pick all" sid="147" type="System">
+                                            <param id="0" name="Object">Piece</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="148" type="Piece">
+                                            <param id="0" name="Instance variable">placeX</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">MovX</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="149" type="Piece">
+                                            <param id="0" name="Instance variable">placeY</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">MovY-1</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="153" type="Piece">
+                                            <param id="0" name="Instance variable">Group</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Value">DrgGroup</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <comment>Upper piece should be located at (CmpX±5,CmpY-IntSz±5)</comment>
+                                        <event-block sid="150">
+                                            <conditions>
+                                                <condition id="-8" name="Compare two values" sid="151" type="System">
+                                                    <param id="0" name="First value">abs(CmpX-Piece.X)</param>
+                                                    <param id="1" name="Comparison">3</param>
+                                                    <param id="2" name="Second value">5</param>
+                                                </condition>
+                                                <condition id="-8" name="Compare two values" sid="170" type="System">
+                                                    <param id="0" name="First value">abs((CmpY-IntSz)-Piece.Y)</param>
+                                                    <param id="1" name="Comparison">3</param>
+                                                    <param id="2" name="Second value">5</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="-9" name="Set value" sid="253" type="System">
+                                                    <param id="0" name="Variable">Joingroups</param>
+                                                    <param id="1" name="Value">Piece.Group&amp;&quot; &quot;</param>
+                                                </action>
+                                                <action id="-10" name="Set value" sid="152" type="Piece">
+                                                    <param id="0" name="Instance variable">Group</param>
+                                                    <param id="1" name="Value">DrgGroup</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                                <comment>Busca la pieza de debajo</comment>
+                                <event-block sid="154">
+                                    <conditions>
+                                        <condition id="-19" name="Pick all" sid="155" type="System">
+                                            <param id="0" name="Object">Piece</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="156" type="Piece">
+                                            <param id="0" name="Instance variable">placeX</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">MovX</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="157" type="Piece">
+                                            <param id="0" name="Instance variable">placeY</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">MovY+1</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="158" type="Piece">
+                                            <param id="0" name="Instance variable">Group</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Value">DrgGroup</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <comment>Bottom piece should be located at (PieceX±5,PieceY+IntSz±5)</comment>
+                                        <event-block sid="159">
+                                            <conditions>
+                                                <condition id="-8" name="Compare two values" sid="160" type="System">
+                                                    <param id="0" name="First value">abs(CmpX-Piece.X)</param>
+                                                    <param id="1" name="Comparison">3</param>
+                                                    <param id="2" name="Second value">5</param>
+                                                </condition>
+                                                <condition id="-8" name="Compare two values" sid="173" type="System">
+                                                    <param id="0" name="First value">abs((CmpY+IntSz)-Piece.Y)</param>
+                                                    <param id="1" name="Comparison">3</param>
+                                                    <param id="2" name="Second value">5</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="-9" name="Set value" sid="254" type="System">
+                                                    <param id="0" name="Variable">Joingroups</param>
+                                                    <param id="1" name="Value">Piece.Group&amp;&quot; &quot;</param>
+                                                </action>
+                                                <action id="-10" name="Set value" sid="161" type="Piece">
+                                                    <param id="0" name="Instance variable">Group</param>
+                                                    <param id="1" name="Value">DrgGroup</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                                <comment>Busca la pieza a la izquierda</comment>
+                                <event-block sid="175">
+                                    <conditions>
+                                        <condition id="-19" name="Pick all" sid="176" type="System">
+                                            <param id="0" name="Object">Piece</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="177" type="Piece">
+                                            <param id="0" name="Instance variable">placeX</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">MovX-1</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="178" type="Piece">
+                                            <param id="0" name="Instance variable">placeY</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">MovY</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="179" type="Piece">
+                                            <param id="0" name="Instance variable">Group</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Value">DrgGroup</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <comment>Bottom piece should be located at (PieceX-IntSz±5,PieceY±5)</comment>
+                                        <event-block sid="180">
+                                            <conditions>
+                                                <condition id="-8" name="Compare two values" sid="181" type="System">
+                                                    <param id="0" name="First value">abs((CmpX-IntSz)-Piece.X)</param>
+                                                    <param id="1" name="Comparison">3</param>
+                                                    <param id="2" name="Second value">5</param>
+                                                </condition>
+                                                <condition id="-8" name="Compare two values" sid="182" type="System">
+                                                    <param id="0" name="First value">abs(CmpY-Piece.Y)</param>
+                                                    <param id="1" name="Comparison">3</param>
+                                                    <param id="2" name="Second value">5</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="-9" name="Set value" sid="255" type="System">
+                                                    <param id="0" name="Variable">Joingroups</param>
+                                                    <param id="1" name="Value">Piece.Group&amp;&quot; &quot;</param>
+                                                </action>
+                                                <action id="-10" name="Set value" sid="183" type="Piece">
+                                                    <param id="0" name="Instance variable">Group</param>
+                                                    <param id="1" name="Value">DrgGroup</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                                <comment>Busca la pieza a la derecha</comment>
+                                <event-block sid="162">
+                                    <conditions>
+                                        <condition id="-19" name="Pick all" sid="163" type="System">
+                                            <param id="0" name="Object">Piece</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="164" type="Piece">
+                                            <param id="0" name="Instance variable">placeX</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">MovX+1</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="165" type="Piece">
+                                            <param id="0" name="Instance variable">placeY</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">MovY</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="166" type="Piece">
+                                            <param id="0" name="Instance variable">Group</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Value">DrgGroup</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <comment>Right piece should be located at (PieceX+IntSz±5,PieceY±5)</comment>
+                                        <event-block sid="167">
+                                            <conditions>
+                                                <condition id="-8" name="Compare two values" sid="168" type="System">
+                                                    <param id="0" name="First value">abs((CmpX+IntSz)-Piece.X)</param>
+                                                    <param id="1" name="Comparison">3</param>
+                                                    <param id="2" name="Second value">5</param>
+                                                </condition>
+                                                <condition id="-8" name="Compare two values" sid="174" type="System">
+                                                    <param id="0" name="First value">abs(CmpY-Piece.Y)</param>
+                                                    <param id="1" name="Comparison">3</param>
+                                                    <param id="2" name="Second value">5</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="-9" name="Set value" sid="256" type="System">
+                                                    <param id="0" name="Variable">Joingroups</param>
+                                                    <param id="1" name="Value">Piece.Group&amp;&quot; &quot;</param>
+                                                </action>
+                                                <action id="-10" name="Set value" sid="169" type="Piece">
+                                                    <param id="0" name="Instance variable">Group</param>
+                                                    <param id="1" name="Value">DrgGroup</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                                <event-block sid="9198720152618599">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="155622025616895" type="System">
+                                            <param id="0" name="Variable">Joingroups</param>
+                                            <param id="1" name="Comparison">4</param>
+                                            <param id="2" name="Value">&quot;&quot;</param>
+                                        </condition>
+                                        <condition id="1" name="Preloads complete" sid="1751737432494712" type="Audio" />
+                                        <condition id="5" inverted="1" name="Is tag playing" sid="9604396481520264" type="Audio">
+                                            <param id="0" name="Tag">&quot;clic&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="0" name="Play" sid="8400573324910106" type="Audio">
+                                            <param id="0" name="Audio file">clic-clac</param>
+                                            <param id="2" name="Loop">0</param>
+                                            <param id="3" name="Volume">0</param>
+                                            <param id="1" name="Tag (optional)">&quot;clic&quot;</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <comment>Alinea todas las piezas del grupo</comment>
+                                <event-block sid="257">
+                                    <conditions>
+                                        <condition id="-10" name="For" sid="258" type="System">
+                                            <param id="0" name="Name">&quot;grupos&quot;</param>
+                                            <param id="1" name="Start index">0</param>
+                                            <param id="2" name="End index">tokencount(trim(Joingroups),&quot; &quot;)-1</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="260" type="System">
+                                            <param id="0" name="Variable">JoinMe</param>
+                                            <param id="1" name="Value">int(tokenat(Joingroups,loopIndex(&quot;grupos&quot;),&quot; &quot;))</param>
+                                        </action>
+                                    </actions>
+                                    <sub-events>
+                                        <event-block sid="261">
+                                            <conditions>
+                                                <condition id="-19" name="Pick all" sid="262" type="System">
+                                                    <param id="0" name="Object">Piece</param>
+                                                </condition>
+                                                <condition id="-7" name="Compare instance variable" sid="263" type="Piece">
+                                                    <param id="0" name="Instance variable">Group</param>
+                                                    <param id="1" name="Comparison">0</param>
+                                                    <param id="2" name="Value">JoinMe</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="-10" name="Set value" sid="264" type="Piece">
+                                                    <param id="0" name="Instance variable">Group</param>
+                                                    <param id="1" name="Value">DrgGroup</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                                <event-block sid="184">
+                                    <conditions>
+                                        <condition id="-19" name="Pick all" sid="185" type="System">
+                                            <param id="0" name="Object">Piece</param>
+                                        </condition>
+                                        <condition id="-7" name="Compare instance variable" sid="186" type="Piece">
+                                            <param id="0" name="Instance variable">Group</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">DrgGroup</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-1" name="Set X" sid="187" type="Piece">
+                                            <param id="0" name="X">DrgX+IntSz*(Piece.placeX-DrgPlaceX)</param>
+                                        </action>
+                                        <action id="-2" name="Set Y" sid="188" type="Piece">
+                                            <param id="0" name="Y">DrgY+IntSz*(Piece.placeY-DrgPlaceY)</param>
+                                        </action>
+                                    </actions>
+                                    <sub-events>
+                                        <comment>All piece picked=Puzzle complete</comment>
+                                        <event-block sid="268">
+                                            <conditions>
+                                                <condition id="-8" name="Compare two values" sid="265" type="System">
+                                                    <param id="0" name="First value">Piece.PickedCount</param>
+                                                    <param id="1" name="Comparison">0</param>
+                                                    <param id="2" name="Second value">Piece.Count</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="-3" name="Create object" sid="276" type="System">
+                                                    <param id="0" name="Object to create">WinnerSprite</param>
+                                                    <param id="1" name="Layer">&quot;Menus&quot;</param>
+                                                    <param id="2" name="X">ViewPortLeft(&quot;Menus&quot;)+(ViewportRight(&quot;Menus&quot;)-ViewPortLeft(&quot;Menus&quot;))/2</param>
+                                                    <param id="3" name="Y">ViewPortTop(&quot;Menus&quot;)+(ViewportBottom(&quot;Menus&quot;)-ViewPortTop(&quot;Menus&quot;))/2</param>
+                                                </action>
+                                                <action id="-15" name="Set visible" sid="269" type="WinnerSprite">
+                                                    <param id="0" name="Visibility">1</param>
+                                                </action>
+                                                <action id="3" name="Start" sid="277" type="WinnerSprite">
+                                                    <param id="0" name="From">1</param>
+                                                </action>
+                                                <action id="-9" name="Set value" sid="584637843844946" type="System">
+                                                    <param id="0" name="Variable">PlayforTime</param>
+                                                    <param id="1" name="Value">2</param>
+                                                </action>
+                                                <action id="-3" name="Set position" sid="2659037806702898" type="TimeText">
+                                                    <param id="0" name="X">WinnerSprite.X</param>
+                                                    <param id="1" name="Y">WinnerSprite.Y+WinnerSprite.Height/2</param>
+                                                </action>
+                                                <action id="0" name="Set text" sid="5422735978513761" type="TimeText">
+                                                    <param id="0" name="Text">&quot;You complete it in &quot;&amp;TimeText.Text</param>
+                                                </action>
+                                            </actions>
+                                            <sub-events>
+                                                <event-block sid="283">
+                                                    <conditions>
+                                                        <condition id="-7" name="Compare instance variable" sid="284" type="Piece">
+                                                            <param id="0" name="Instance variable">placeX</param>
+                                                            <param id="1" name="Comparison">0</param>
+                                                            <param id="2" name="Value">4</param>
+                                                        </condition>
+                                                        <condition id="-7" name="Compare instance variable" sid="285" type="Piece">
+                                                            <param id="0" name="Instance variable">placeY</param>
+                                                            <param id="1" name="Comparison">0</param>
+                                                            <param id="2" name="Value">3</param>
+                                                        </condition>
+                                                    </conditions>
+                                                    <actions>
+                                                        <action id="-8" name="Scroll to object" sid="282" type="System">
+                                                            <param id="0" name="Object">Piece</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                            </sub-events>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <comment>Shuffle icon shuffles pieces if sorted, sorts pieces if shuffled</comment>
+        <event-block collapsed="1" sid="229">
+            <conditions>
+                <condition behavior="DragDrop" id="1" name="On drag start" sid="230" type="ShuffleButton" />
+            </conditions>
+            <actions>
+                <action behavior="DragDrop" id="1" name="Drop" sid="231" type="ShuffleButton" />
+                <action id="-9" name="Set value" sid="5105401925594374" type="System">
+                    <param id="0" name="Variable">PlayforTime</param>
+                    <param id="1" name="Value">ShuffleButton.AnimationName=&quot;Shuffle&quot;? 1 : 0</param>
+                </action>
+                <action id="-9" name="Destroy" sid="6581119041777345" type="WinnerSprite" />
+                <action id="-9" name="Set value" sid="1339340732201033" type="System">
+                    <param id="0" name="Variable">EllapsedTime</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+            </actions>
+            <sub-events>
+                <comment>Shuffle Pieces</comment>
+                <event-block sid="293">
+                    <conditions>
+                        <condition id="-8" name="Compare two values" sid="294" type="System">
+                            <param id="0" name="First value">ShuffleButton.AnimationName</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Second value">&quot;Shuffle&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-15" name="Set visible" sid="317" type="ShuffleButton">
+                            <param id="0" name="Visibility">0</param>
+                        </action>
+                        <action id="4" name="Set animation" sid="299" type="ShuffleButton">
+                            <param id="0" name="Animation">&quot;Sort&quot;</param>
+                            <param id="1" name="From">1</param>
+                        </action>
+                        <action behavior="DragDrop" id="0" name="Set enabled" sid="302" type="ShuffleButton">
+                            <param id="0" name="State">0</param>
+                        </action>
+                        <action id="-10" name="Set value" sid="303" type="ShuffleButton">
+                            <param id="0" name="Instance variable">reenable</param>
+                            <param id="1" name="Value">wallclocktime+5</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <event-block sid="233">
+                            <conditions>
+                                <condition id="-24" name="For Each (ordered)" sid="234" type="System">
+                                    <param id="0" name="Object">Piece</param>
+                                    <param id="1" name="Expression">Piece.MiUID</param>
+                                    <param id="2" name="Order">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-3" name="Set position" sid="235" type="Piece">
+                                    <param id="0" name="X">100+int(random(LayoutWidth-200))</param>
+                                    <param id="1" name="Y">100+int(random(LayoutHeight-200))</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="236" type="Piece">
+                                    <param id="0" name="Instance variable">Group</param>
+                                    <param id="1" name="Value">Piece.MiUID</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <comment>Sort pieces.</comment>
+                <event-block sid="295">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="296" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="-15" name="Set visible" sid="318" type="ShuffleButton">
+                            <param id="0" name="Visibility">0</param>
+                        </action>
+                        <action id="4" name="Set animation" sid="304" type="ShuffleButton">
+                            <param id="0" name="Animation">&quot;Shuffle&quot;</param>
+                            <param id="1" name="From">1</param>
+                        </action>
+                        <action behavior="DragDrop" id="0" name="Set enabled" sid="305" type="ShuffleButton">
+                            <param id="0" name="State">0</param>
+                        </action>
+                        <action id="-10" name="Set value" sid="306" type="ShuffleButton">
+                            <param id="0" name="Instance variable">reenable</param>
+                            <param id="1" name="Value">wallclocktime+5</param>
+                        </action>
+                        <action id="-7" name="Scroll to position" sid="320" type="System">
+                            <param id="0" name="X">100+(MaxX/2)*IntSz</param>
+                            <param id="1" name="Y">100+(MaxY/2)*IntSz</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <event-block sid="313">
+                            <conditions>
+                                <condition id="-24" name="For Each (ordered)" sid="314" type="System">
+                                    <param id="0" name="Object">Piece</param>
+                                    <param id="1" name="Expression">Piece.MiUID</param>
+                                    <param id="2" name="Order">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-3" name="Set position" sid="315" type="Piece">
+                                    <param id="0" name="X">100+IntSz*Piece.placeX</param>
+                                    <param id="1" name="Y">100+IntSz*Piece.placeY</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="316" type="Piece">
+                                    <param id="0" name="Instance variable">Group</param>
+                                    <param id="1" name="Value">Piece.MiUID</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <comment>Re-enable shuffle icon</comment>
+        <event-block sid="309">
+            <conditions>
+                <condition behavior="DragDrop" id="3" inverted="1" name="Is enabled" sid="310" type="ShuffleButton" />
+                <condition id="-7" name="Compare instance variable" sid="311" type="ShuffleButton">
+                    <param id="0" name="Instance variable">reenable</param>
+                    <param id="1" name="Comparison">2</param>
+                    <param id="2" name="Value">wallclocktime</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="DragDrop" id="0" name="Set enabled" sid="312" type="ShuffleButton">
+                    <param id="0" name="State">1</param>
+                </action>
+                <action id="-15" name="Set visible" sid="319" type="ShuffleButton">
+                    <param id="0" name="Visibility">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>Clicking winner icon will restart layout.</comment>
+        <event-block sid="271">
+            <conditions>
+                <condition behavior="DragDrop" id="1" name="On drag start" sid="272" type="WinnerSprite" />
+            </conditions>
+            <actions>
+                <action behavior="DragDrop" id="1" name="Drop" sid="273" type="WinnerSprite" />
+                <action behavior="Fade" id="1" name="Start fade" sid="9169548734530834" type="WinnerSprite" />
+                <action id="-9" name="Set value" sid="2931205895727715" type="System">
+                    <param id="0" name="Variable">PlayforTime</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="0" name="Set text" sid="1356284076392624" type="TimeText">
+                    <param id="0" name="Text">&quot;&quot;</param>
+                </action>
+                <action id="-3" name="Set position" sid="2110023217412446" type="TimeText">
+                    <param id="0" name="X">1</param>
+                    <param id="1" name="Y">1</param>
+                </action>
+                <action id="-21" name="Reset global variables" sid="274" type="System" />
+                <action id="-26" name="Restart layout" sid="275" type="System" />
+            </actions>
+        </event-block>
+        <comment>WinnerSprite will fade after first animation</comment>
+        <event-block sid="279">
+            <conditions>
+                <condition id="5" name="On any finished" sid="280" type="WinnerSprite" />
+            </conditions>
+            <actions>
+                <action id="3" name="Start" sid="281" type="WinnerSprite">
+                    <param id="0" name="From">1</param>
+                </action>
+                <action behavior="Fade" id="1" name="Start fade" sid="4098190114122098" type="WinnerSprite" />
+                <action id="-9" name="Set value" sid="1261285918652211" type="System">
+                    <param id="0" name="Variable">PlayforTime</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="0" name="Set text" sid="1429646793352729" type="TimeText">
+                    <param id="0" name="Text">&quot;&quot;</param>
+                </action>
+                <action id="-3" name="Set position" sid="598439468575043" type="TimeText">
+                    <param id="0" name="X">1</param>
+                    <param id="1" name="Y">1</param>
+                </action>
+                <action id="-21" name="Reset global variables" sid="6138966167918129" type="System" />
+                <action id="-26" name="Restart layout" sid="8888830395658212" type="System" />
+            </actions>
+        </event-block>
+        <comment>BkgButton: Dragging (clicking) it will circle between photo, white or green background</comment>
+        <event-block collapsed="1" sid="335">
+            <conditions>
+                <condition behavior="DragDrop" id="1" name="On drag start" sid="336" type="BkgButton" />
+            </conditions>
+            <actions>
+                <action behavior="DragDrop" id="1" name="Drop" sid="337" type="BkgButton" />
+            </actions>
+            <sub-events>
+                <event-block sid="338">
+                    <conditions>
+                        <condition id="-8" name="Compare two values" sid="339" type="System">
+                            <param id="0" name="First value">BkgButton.AnimationName</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Second value">&quot;Fondo0&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-26" name="Move to layer" sid="358" type="Dibujo">
+                            <param id="0" name="Layer">&quot;Fondo&quot;</param>
+                        </action>
+                        <action id="-3" name="Set position" sid="357" type="Dibujo">
+                            <param id="0" name="X">1024/2</param>
+                            <param id="1" name="Y">768/2</param>
+                        </action>
+                        <action id="-15" name="Set visible" sid="340" type="Dibujo">
+                            <param id="0" name="Visibility">1</param>
+                        </action>
+                        <action id="-27" name="Set effect enabled" sid="342" type="Dibujo">
+                            <param id="0" name="Mode">1</param>
+                            <param id="1" name="Effect">&quot;Sepia&quot;</param>
+                        </action>
+                        <action id="4" name="Set animation" sid="354" type="BkgButton">
+                            <param id="0" name="Animation">&quot;Fondo1&quot;</param>
+                            <param id="1" name="From">1</param>
+                        </action>
+                        <action behavior="DragDrop" id="0" name="Set enabled" sid="359" type="BkgButton">
+                            <param id="0" name="State">0</param>
+                        </action>
+                        <action id="-10" name="Set value" sid="361" type="BkgButton">
+                            <param id="0" name="Instance variable">reenable</param>
+                            <param id="1" name="Value">wallclocktime+1</param>
+                        </action>
+                        <action id="-15" name="Set visible" sid="402" type="BkgButton">
+                            <param id="0" name="Visibility">0</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="364">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="365" type="System" />
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="344">
+                            <conditions>
+                                <condition id="-8" name="Compare two values" sid="345" type="System">
+                                    <param id="0" name="First value">BkgButton.AnimationName</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Second value">&quot;Fondo1&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-27" name="Set effect enabled" sid="347" type="Dibujo">
+                                    <param id="0" name="Mode">0</param>
+                                    <param id="1" name="Effect">&quot;Sepia&quot;</param>
+                                </action>
+                                <action id="-15" name="Set visible" sid="346" type="Dibujo">
+                                    <param id="0" name="Visibility">0</param>
+                                </action>
+                                <action id="-34" name="Set layer background color" sid="348" type="System">
+                                    <param id="0" name="Layer">&quot;Fondo&quot;</param>
+                                    <param id="1" name="Color">rgb(255, 255, 255)</param>
+                                </action>
+                                <action id="4" name="Set animation" sid="355" type="BkgButton">
+                                    <param id="0" name="Animation">&quot;Fondo2&quot;</param>
+                                    <param id="1" name="From">1</param>
+                                </action>
+                                <action behavior="DragDrop" id="0" name="Set enabled" sid="362" type="BkgButton">
+                                    <param id="0" name="State">0</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="363" type="BkgButton">
+                                    <param id="0" name="Instance variable">reenable</param>
+                                    <param id="1" name="Value">wallclocktime+1</param>
+                                </action>
+                                <action id="-15" name="Set visible" sid="403" type="BkgButton">
+                                    <param id="0" name="Visibility">0</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="366">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="367" type="System" />
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="349">
+                                    <conditions>
+                                        <condition id="-8" name="Compare two values" sid="350" type="System">
+                                            <param id="0" name="First value">BkgButton.AnimationName</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Second value">&quot;Fondo2&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-27" name="Set effect enabled" sid="351" type="Dibujo">
+                                            <param id="0" name="Mode">0</param>
+                                            <param id="1" name="Effect">&quot;Sepia&quot;</param>
+                                        </action>
+                                        <action id="-15" name="Set visible" sid="352" type="Dibujo">
+                                            <param id="0" name="Visibility">0</param>
+                                        </action>
+                                        <action id="-34" name="Set layer background color" sid="353" type="System">
+                                            <param id="0" name="Layer">&quot;Fondo&quot;</param>
+                                            <param id="1" name="Color">rgb(11, 128, 50)</param>
+                                        </action>
+                                        <action id="4" name="Set animation" sid="356" type="BkgButton">
+                                            <param id="0" name="Animation">&quot;Fondo0&quot;</param>
+                                            <param id="1" name="From">1</param>
+                                        </action>
+                                        <action behavior="DragDrop" id="0" name="Set enabled" sid="368" type="BkgButton">
+                                            <param id="0" name="State">0</param>
+                                        </action>
+                                        <action id="-10" name="Set value" sid="369" type="BkgButton">
+                                            <param id="0" name="Instance variable">reenable</param>
+                                            <param id="1" name="Value">wallclocktime+1</param>
+                                        </action>
+                                        <action id="-15" name="Set visible" sid="404" type="BkgButton">
+                                            <param id="0" name="Visibility">0</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="370">
+            <conditions>
+                <condition behavior="DragDrop" id="3" inverted="1" name="Is enabled" sid="371" type="BkgButton" />
+                <condition id="-7" name="Compare instance variable" sid="372" type="BkgButton">
+                    <param id="0" name="Instance variable">reenable</param>
+                    <param id="1" name="Comparison">2</param>
+                    <param id="2" name="Value">wallclocktime</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="DragDrop" id="0" name="Set enabled" sid="373" type="BkgButton">
+                    <param id="0" name="State">1</param>
+                </action>
+                <action id="-15" name="Set visible" sid="374" type="BkgButton">
+                    <param id="0" name="Visibility">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>ConfButton: Dragging (clicking) it will open the menu.</comment>
+        <comment>***SOME WARNING SHOULD BE PROVIDED SINCE PUZZLE WILL BE RESET***</comment>
+        <event-block sid="406">
+            <conditions>
+                <condition behavior="DragDrop" id="1" name="On drag start" sid="407" type="ConfButton" />
+            </conditions>
+            <actions>
+                <action behavior="DragDrop" id="1" name="Drop" sid="408" type="ConfButton" />
+                <action id="-25" name="Go to layout (by name)" sid="434" type="System">
+                    <param id="0" name="Layout">&quot;Menu&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>ShadowButton: Enable or disable lines between pieces</comment>
+        <event-block collapsed="1" sid="3326670704954221">
+            <conditions>
+                <condition behavior="DragDrop" id="1" name="On drag start" sid="6487451868694983" type="ShadowButton" />
+            </conditions>
+            <actions>
+                <action behavior="DragDrop" id="1" name="Drop" sid="6122093226907031" type="ShadowButton" />
+                <action behavior="DragDrop" id="0" name="Set enabled" sid="8428063305674957" type="ShadowButton">
+                    <param id="0" name="State">0</param>
+                </action>
+                <action id="-10" name="Set value" sid="2441092790140826" type="ShadowButton">
+                    <param id="0" name="Instance variable">reenable</param>
+                    <param id="1" name="Value">wallclocktime+1</param>
+                </action>
+                <action id="-15" name="Set visible" sid="441138730400116" type="ShadowButton">
+                    <param id="0" name="Visibility">0</param>
+                </action>
+                <action id="4" name="Set animation" sid="4690017782149758" type="ShadowButton">
+                    <param id="0" name="Animation">ShadowButton.AnimationName=&quot;ShadowOff&quot; ? &quot;ShadowOn&quot; : &quot;ShadowOff&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+            </actions>
+            <sub-events>
+                <event-block sid="9370561330775095">
+                    <conditions>
+                        <condition id="-8" name="Compare two values" sid="1858281183778013" type="System">
+                            <param id="0" name="First value">ShadowButton.AnimationName</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Second value">&quot;ShadowOff&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                </event-block>
+                <event-block sid="3810669075792554">
+                    <conditions>
+                        <condition id="-8" name="Compare two values" sid="2391255431831202" type="System">
+                            <param id="0" name="First value">ShadowButton.AnimationName</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Second value">&quot;ShadowOn&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="882970758955172">
+            <conditions>
+                <condition behavior="DragDrop" id="3" inverted="1" name="Is enabled" sid="8655526380032615" type="ShadowButton" />
+                <condition id="-7" name="Compare instance variable" sid="464874788154469" type="ShadowButton">
+                    <param id="0" name="Instance variable">reenable</param>
+                    <param id="1" name="Comparison">2</param>
+                    <param id="2" name="Value">wallclocktime</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="DragDrop" id="0" name="Set enabled" sid="6258539997639118" type="ShadowButton">
+                    <param id="0" name="State">1</param>
+                </action>
+                <action id="-15" name="Set visible" sid="3117507983278195" type="ShadowButton">
+                    <param id="0" name="Visibility">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>EllapsedTime management.</comment>
+        <event-block sid="4653515767025477">
+            <conditions>
+                <condition id="-6" name="Every X seconds" sid="5787535062602797" type="System">
+                    <param id="0" name="Interval (seconds)">1</param>
+                </condition>
+                <condition id="-14" name="Compare variable" sid="6421651048757426" type="System">
+                    <param id="0" name="Variable">PlayforTime</param>
+                    <param id="1" name="Comparison">0</param>
+                    <param id="2" name="Value">1</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-10" name="Add to" sid="8159421931638542" type="System">
+                    <param id="0" name="Variable">EllapsedTime</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+                <action id="0" name="Set text" sid="7585421333450406" type="TimeText">
+                    <param id="0" name="Text">int(EllapsedTime/3600)&amp;&quot;:&quot;&amp;(int(EllapsedTime / 60)%60) &amp; &quot;:&quot; &amp; (EllapsedTime % 60)</param>
+                </action>
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>

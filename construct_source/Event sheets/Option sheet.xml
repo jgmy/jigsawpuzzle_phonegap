@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Option sheet</name>
+    <events>
+        <variable constant="0" name="MenuReady" sid="446" static="0" type="number">0</variable>
+        <event-block sid="431">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="432" type="System" />
+            </conditions>
+            <actions>
+                <action id="-27" name="Set effect enabled" sid="433" type="Dibujo">
+                    <param id="0" name="Mode">0</param>
+                    <param id="1" name="Effect">&quot;Sepia&quot;</param>
+                </action>
+                <action id="1" name="Request project file" sid="453" type="AJAX">
+                    <param id="0" name="Tag">&quot;ListaImagenes&quot;</param>
+                    <param id="1" name="File">lista_xml.xml</param>
+                </action>
+                <action id="0" name="Set text" sid="470" type="Description">
+                    <param id="0" name="Text">&quot;PLEASE WAIT&quot;</param>
+                </action>
+                <action id="0" name="Set text" sid="491" type="PieceDesc">
+                    <param id="0" name="Text">&quot;&quot;&amp; int(tokenat(LstTiles.SelectedText,0,&quot;x&quot;))*int(tokenat(LstTiles.SelectedText,1,&quot;x&quot;))</param>
+                </action>
+                <action id="4" name="Set animation" sid="492" type="PieceMask">
+                    <param id="0" name="Animation">LstTiles.SelectedText</param>
+                    <param id="1" name="From">1</param>
+                </action>
+                <action id="5" name="Set frame" sid="494" type="PieceMask">
+                    <param id="0" name="Frame number">16</param>
+                </action>
+                <action id="2" name="Stop" sid="493" type="PieceMask" />
+            </actions>
+        </event-block>
+        <event-block sid="448">
+            <conditions>
+                <condition id="0" name="On completed" sid="449" type="AJAX">
+                    <param id="0" name="Tag">&quot;ListaImagenes&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Load" sid="450" type="XML">
+                    <param id="0" name="XML">Ajax.LastData</param>
+                </action>
+                <action id="-9" name="Set value" sid="458" type="System">
+                    <param id="0" name="Variable">MenuReady</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+                <action id="0" name="Set text" sid="471" type="Description">
+                    <param id="0" name="Text">&quot;&quot;</param>
+                </action>
+                <action id="11" name="Clear" sid="478" type="LstImg" />
+            </actions>
+            <sub-events>
+                <event-block sid="454">
+                    <conditions>
+                        <condition id="0" name="For each node" sid="455" type="XML">
+                            <param id="0" name="XPath">&quot;/image_list/image&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Add key" sid="7653142837973099" type="Descriptions">
+                            <param id="0" name="Key">trim(XML.StringValue(&quot;file/text()&quot;))</param>
+                            <param id="1" name="Value">XML.StringValue(&quot;name/text()&quot;) &amp;newline &amp; newline &amp; &quot;Author:&quot; &amp; newline &amp; trim(XML.StringValue(&quot;author/text()&quot;)) &amp; newline &amp; newline &amp;&quot;License: &quot; &amp; newline &amp; trim(XML.StringValue(&quot;license/text()&quot;)) &amp; newline &amp;newline &amp;&quot;More details: &quot; &amp; newline &amp;XML.StringValue(&quot;originalurl/text()&quot;)</param>
+                        </action>
+                        <action id="7" name="Add item" sid="457" type="LstImg">
+                            <param id="0" name="Text">trim(XML.StringValue(&quot;file/text()&quot;))</param>
+                        </action>
+                        <action id="0" name="Set text" sid="480" type="Description">
+                            <param id="0" name="Text">Descriptions.Get(LstImg.SelectedText)</param>
+                        </action>
+                        <action id="0" name="Add key" sid="7832533145105912" type="URIs">
+                            <param id="0" name="Key">trim(XML.StringValue(&quot;file/text()&quot;))</param>
+                            <param id="1" name="Value">XML.StringValue(&quot;originalurl/text()&quot;)</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="459">
+            <conditions>
+                <condition id="1" name="On error" sid="460" type="AJAX">
+                    <param id="0" name="Tag">&quot;ListaImagenes&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Load" sid="461" type="XML">
+                    <param id="0" name="XML">&quot;&lt;?xml version=&quot;&quot;1.0&quot;&quot; encoding=&quot;&quot;ISO-8859-1&quot;&quot;?&gt;&#x0D;&#x0A;&lt;image_list&gt;&lt;image&gt;&lt;file&gt;Polignano.jpg&lt;/file&gt;&lt;name&gt;Sky at Polignano a Mare, Italy.&lt;/name&gt;&lt;author&gt;Jose G Moya Y&lt;/author&gt;&lt;license&gt;If you see this image only, there is a problem loading image list. License: Creative Commons Attribution-Noncommercial-Sharealike&lt;/license&gt;&lt;originalurl&gt;http://www.flickr.com/photos/josemoya/72120074/in/set-1550315/&lt;/originalurl&gt;&lt;/image&gt;&lt;image_list&gt;&quot;</param>
+                </action>
+                <action id="-9" name="Set value" sid="462" type="System">
+                    <param id="0" name="Variable">MenuReady</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+                <action id="0" name="Set text" sid="472" type="Description">
+                    <param id="0" name="Text">&quot;&quot;</param>
+                </action>
+                <action id="11" name="Clear" sid="479" type="LstImg" />
+            </actions>
+            <sub-events>
+                <event-block sid="474">
+                    <conditions>
+                        <condition id="0" name="For each node" sid="475" type="XML">
+                            <param id="0" name="XPath">&quot;/image_list/image&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="7" name="Add item" sid="477" type="LstImg">
+                            <param id="0" name="Text">trim(XML.StringValue(&quot;file/text&quot;))</param>
+                        </action>
+                        <action id="0" name="Add key" sid="4577361317331452" type="Descriptions">
+                            <param id="0" name="Key">trim(XML.StringValue(&quot;file/text()&quot;))</param>
+                            <param id="1" name="Value">XML.StringValue(&quot;name/text()&quot;) &amp;newline &amp; newline &amp; &quot;Author:&quot; &amp; newline &amp; trim(XML.StringValue(&quot;author/text()&quot;)) &amp; newline &amp; newline &amp;&quot;License: &quot; &amp; newline &amp; trim(XML.StringValue(&quot;license/text()&quot;)) &amp; newline &amp;newline &amp;&quot;More details: &quot; &amp; newline &amp;XML.StringValue(&quot;originalurl/text()&quot;)</param>
+                        </action>
+                        <action id="0" name="Add key" sid="6977394629656471" type="URIs">
+                            <param id="0" name="Key">trim(XML.StringValue(&quot;file/text()&quot;))</param>
+                            <param id="1" name="Value">XML.StringValue(&quot;originalurl/text()&quot;)</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="496">
+            <conditions>
+                <condition id="-14" name="Compare variable" sid="497" type="System">
+                    <param id="0" name="Variable">MenuReady</param>
+                    <param id="1" name="Comparison">0</param>
+                    <param id="2" name="Value">1</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="498" type="System">
+                    <param id="0" name="Variable">MenuReady</param>
+                    <param id="1" name="Value">2</param>
+                </action>
+                <action id="-15" name="Set visible" sid="7671451460654726" type="Dibujo">
+                    <param id="0" name="Visibility">0</param>
+                </action>
+                <action id="0" name="Set selection" sid="3751618601216787" type="LstImg">
+                    <param id="0" name="Index">0</param>
+                </action>
+                <action id="10" name="Load image from URL" sid="499" type="Dibujo">
+                    <param id="0" name="URI">LstImg.SelectedText</param>
+                    <param id="1" name="Size">1</param>
+                </action>
+                <action id="0" name="Set text" sid="501" type="Description">
+                    <param id="0" name="Text">Descriptions.Get(LstImg.SelectedText)</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="451">
+            <conditions>
+                <condition id="-14" name="Compare variable" sid="452" type="System">
+                    <param id="0" name="Variable">MenuReady</param>
+                    <param id="1" name="Comparison">0</param>
+                    <param id="2" name="Value">2</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="424">
+                    <conditions>
+                        <condition id="1" name="On selection changed" sid="425" type="LstTiles" />
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="430" type="System">
+                            <param id="0" name="Variable">PieceSet</param>
+                            <param id="1" name="Value">LstTiles.SelectedText</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="426">
+                    <conditions>
+                        <condition id="1" name="On selection changed" sid="427" type="LstImg" />
+                    </conditions>
+                    <actions>
+                        <action id="-15" name="Set visible" sid="3794227888667827" type="Dibujo">
+                            <param id="0" name="Visibility">0</param>
+                        </action>
+                        <action id="10" name="Load image from URL" sid="423" type="Dibujo">
+                            <param id="0" name="URI">LstImg.SelectedText</param>
+                            <param id="1" name="Size">1</param>
+                        </action>
+                        <action id="0" name="Set text" sid="468" type="Description">
+                            <param id="0" name="Text">Descriptions.Get(LstImg.SelectedText)</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="439">
+                    <conditions>
+                        <condition behavior="DragDrop" id="1" name="On drag start" sid="440" type="ShuffleButton" />
+                    </conditions>
+                    <actions>
+                        <action behavior="DragDrop" id="1" name="Drop" sid="441" type="ShuffleButton" />
+                        <action id="-2" name="Go to layout" sid="442" type="System">
+                            <param id="0" name="Layout">Game</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="486">
+            <conditions>
+                <condition id="1" name="On selection changed" sid="487" type="LstTiles" />
+            </conditions>
+            <actions>
+                <action id="0" name="Set text" sid="488" type="PieceDesc">
+                    <param id="0" name="Text">&quot;&quot;&amp; int(tokenat(LstTiles.SelectedText,0,&quot;x&quot;))*int(tokenat(LstTiles.SelectedText,1,&quot;x&quot;))</param>
+                </action>
+                <action id="4" name="Set animation" sid="489" type="PieceMask">
+                    <param id="0" name="Animation">LstTiles.SelectedText</param>
+                    <param id="1" name="From">1</param>
+                </action>
+                <action id="5" name="Set frame" sid="495" type="PieceMask">
+                    <param id="0" name="Frame number">17</param>
+                </action>
+                <action id="2" name="Stop" sid="490" type="PieceMask" />
+            </actions>
+        </event-block>
+        <event-block sid="9103896109940986">
+            <conditions>
+                <condition id="10" name="On image URL loaded" sid="3572323131690011" type="Dibujo" />
+            </conditions>
+            <actions>
+                <action id="-15" name="Set visible" sid="3469037645896472" type="Dibujo">
+                    <param id="0" name="Visibility">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="4229690545302521">
+            <conditions>
+                <condition id="0" name="On clicked" sid="5569434649389623" type="UriButton" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="4141695610635509">
+                    <conditions>
+                        <condition id="13" name="Is metered" sid="2609622985532473" type="Browser" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Alert" sid="4418346386160741" type="Browser">
+                            <param id="0" name="Message">&quot;This will start an internet connection to &quot;&amp;URIs.Get(LstImg.SelectedText)</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="9963608151901472">
+                    <conditions>
+                        <condition id="1" inverted="1" name="Is online" sid="7486526238114023" type="Browser" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Alert" sid="5663295141847914" type="Browser">
+                            <param id="0" name="Message">&quot;This will start an internet connection to &quot;&amp;URIs.Get(LstImg.SelectedText)</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="2353090571019808">
+                    <conditions />
+                    <actions>
+                        <action id="8" name="Open URL in new window" sid="8535175637452978" type="Browser">
+                            <param id="0" name="URL">URIs.Get(LstImg.SelectedText)</param>
+                            <param id="1" name="Tag">&quot;NewWindow&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+    </events>
+</c2eventsheet>

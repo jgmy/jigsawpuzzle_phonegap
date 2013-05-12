@@ -1,0 +1,548 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2project>
+    <name>JigSawPuzzlePhone</name>
+    <description>A jigsaw puzzle - Minimal Version</description>
+    <version>1.4.0.6</version>
+    <author>JoseGMoya</author>
+    <unique-id>1eky4tdup5gw4</unique-id>
+    <saved-with-version>12900</saved-with-version>
+    <used-plugins>
+        <plugin author="Scirra" id="Browser" version="1">Browser</plugin>
+        <plugin author="Scirra" id="AJAX" version="1">AJAX</plugin>
+        <plugin author="Scirra" id="Dictionary" version="1">Dictionary</plugin>
+        <plugin author="Scirra" id="Audio" version="1">Audio</plugin>
+        <plugin author="Scirra" id="Button" version="1">Button</plugin>
+        <plugin author="Scirra" id="List" version="1">List</plugin>
+        <plugin author="Scirra" id="Sprite" version="1">Sprite</plugin>
+        <plugin author="Scirra" id="Text" version="1">Text</plugin>
+        <plugin author="Scirra" id="TextBox" version="1">Text box</plugin>
+        <plugin author="Scirra" id="TiledBg" version="1">Tiled Background</plugin>
+        <plugin author="Scirra" id="XML" version="1">XML</plugin>
+        <plugin author="R0J0hound" id="c2canvas" version="1.600000024">Canvas</plugin>
+    </used-plugins>
+    <used-behaviors>
+        <behavior author="Scirra" id="DragnDrop" version="1">Drag &amp; Drop</behavior>
+        <behavior author="Scirra" id="Fade" version="1">Fade</behavior>
+        <behavior author="Scirra" id="Pin" version="1">Pin</behavior>
+        <behavior author="Scirra" id="bound" version="1">Bound to layout</behavior>
+    </used-behaviors>
+    <used-effects>
+        <effect author="Scirra" id="sepia">Sepia</effect>
+    </used-effects>
+    <configurations>
+        <configuration exporter-descname="HTML5" exporter-id="html5" name="HTML5" />
+    </configurations>
+    <window-size>
+        <width>640</width>
+        <height>480</height>
+    </window-size>
+    <pixel-rounding>0</pixel-rounding>
+    <first-layout>Loading</first-layout>
+    <use-loader-layout>1</use-loader-layout>
+    <configuration-settings>
+        <prop name="Clear background">Yes</prop>
+        <prop name="Enable WebGL">On</prop>
+        <prop name="Fullscreen in browser">Crop</prop>
+        <prop name="Hide address bar">No</prop>
+        <prop name="Loader style">Progress bar &amp; logo</prop>
+        <prop name="Preview browser">Chrome</prop>
+        <prop name="Sampling">Linear</prop>
+        <prop name="Use iOS retina display">iPhone only</prop>
+    </configuration-settings>
+    <object-folder expanded="1">
+        <object-type name="PieceMask" sid="0">
+            <plugin id="Sprite" />
+            <instance-variables>
+                <instance-variable comment="Right X place for this piece" name="placeX" sid="1" type="number" />
+                <instance-variable comment="Right Y place for this piece" name="placeY" sid="2" type="number" />
+            </instance-variables>
+            <animation-folder expanded="1">
+                <animation framecount="48" loop="0" name="8x6" pingpong="0" repeatcount="1" repeatto="0" sid="3" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+                <animation framecount="108" loop="0" name="12x9" pingpong="0" repeatcount="1" repeatto="0" sid="381" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Dibujo" sid="4">
+            <plugin id="Sprite" />
+            <effects>
+                <effect-type name="Sepia">
+                    <effect id="sepia" />
+                </effect-type>
+            </effects>
+            <animation-folder expanded="1">
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="5" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Piece" sid="6">
+            <plugin id="c2canvas" />
+            <instance-variables>
+                <instance-variable name="placeX" sid="7" type="number" />
+                <instance-variable name="placeY" sid="8" type="number" />
+                <instance-variable comment="UID of Pinned PinPoint" name="Group" sid="9" type="number" />
+                <instance-variable name="MiUID" sid="129" type="number" />
+            </instance-variables>
+            <behaviors>
+                <behavior-type name="DragDrop" sid="10">
+                    <behavior id="DragnDrop" />
+                </behavior-type>
+                <behavior-type name="Pin" sid="11">
+                    <behavior id="Pin" />
+                </behavior-type>
+                <behavior-type name="BoundToLayout" sid="223">
+                    <behavior id="bound" />
+                </behavior-type>
+            </behaviors>
+            <texture />
+        </object-type>
+        <object-type name="Pin" sid="12">
+            <plugin id="Sprite" />
+            <instance-variables>
+                <instance-variable name="Group" sid="106" type="number" />
+            </instance-variables>
+            <behaviors>
+                <behavior-type name="Pin" sid="15">
+                    <behavior id="Pin" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder expanded="1">
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="16" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="DebugText" sid="17">
+            <plugin id="Text" />
+            <instance-variables>
+                <instance-variable name="tmpTxt" sid="200" type="string" />
+            </instance-variables>
+        </object-type>
+        <object-type name="ShuffleButton" sid="226">
+            <plugin id="Sprite" />
+            <instance-variables>
+                <instance-variable name="reenable" sid="301" type="number" />
+            </instance-variables>
+            <behaviors>
+                <behavior-type name="DragDrop" sid="228">
+                    <behavior id="DragnDrop" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder expanded="1">
+                <animation framecount="1" loop="0" name="Shuffle" pingpong="0" repeatcount="1" repeatto="0" sid="227" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.508772">
+                        <collision-poly>
+                            <point x="0.0390625" y="0.0877193" />
+                            <point x="0.5" y="0.350877" />
+                            <point x="0.984375" y="0.0350877" />
+                            <point x="0.992188" y="0.491228" />
+                            <point x="0.96875" y="0.929825" />
+                            <point x="0.5" y="0.701754" />
+                            <point x="0.0234375" y="0.947368" />
+                            <point x="0.0078125" y="0.491228" />
+                        </collision-poly>
+                    </frame>
+                </animation>
+                <animation framecount="1" loop="0" name="Sort" pingpong="0" repeatcount="1" repeatto="0" sid="300" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.509091" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="WinnerSprite" sid="266">
+            <plugin id="Sprite" />
+            <behaviors>
+                <behavior-type name="DragDrop" sid="270">
+                    <behavior id="DragnDrop" />
+                </behavior-type>
+                <behavior-type name="Fade" sid="474456039256796">
+                    <behavior id="Fade" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder expanded="1">
+                <animation framecount="34" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="267" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.502703" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.502703" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.502703" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.502703" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.502703" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.502703" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.502703" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.500846" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.500846" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.500846" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.500846" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.500846" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.500846" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.500846" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.500846" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.500846" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.502703" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Text" sid="323">
+            <plugin id="Text" />
+        </object-type>
+        <object-type name="BkgButton" sid="330">
+            <plugin id="Sprite" />
+            <instance-variables>
+                <instance-variable name="reenable" sid="360" type="number" />
+            </instance-variables>
+            <behaviors>
+                <behavior-type name="DragDrop" sid="334">
+                    <behavior id="DragnDrop" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder expanded="1">
+                <animation framecount="1" loop="0" name="Fondo0" pingpong="0" repeatcount="1" repeatto="0" sid="331" speed="5">
+                    <frame duration="1" hotspotX="0.508475" hotspotY="0.508772">
+                        <collision-poly>
+                            <point x="0.0169492" y="0.0175439" />
+                            <point x="0.491525" y="0" />
+                            <point x="0.983051" y="0.0175439" />
+                            <point x="1" y="0.491228" />
+                            <point x="0.983051" y="0.982456" />
+                            <point x="0.491525" y="1" />
+                            <point x="0.0338983" y="0.964912" />
+                            <point x="0" y="0.491228" />
+                        </collision-poly>
+                    </frame>
+                </animation>
+                <animation framecount="1" loop="0" name="Fondo1" pingpong="0" repeatcount="1" repeatto="0" sid="333" speed="5">
+                    <frame duration="1" hotspotX="0.508475" hotspotY="0.508772">
+                        <collision-poly>
+                            <point x="0.0169492" y="0.0175439" />
+                            <point x="0.491525" y="0" />
+                            <point x="0.983051" y="0.0175439" />
+                            <point x="1" y="0.491228" />
+                            <point x="0.983051" y="0.982456" />
+                            <point x="0.491525" y="1" />
+                            <point x="0.0338983" y="0.964912" />
+                            <point x="0" y="0.491228" />
+                        </collision-poly>
+                    </frame>
+                </animation>
+                <animation framecount="1" loop="0" name="Fondo2" pingpong="0" repeatcount="1" repeatto="0" sid="332" speed="5">
+                    <frame duration="1" hotspotX="0.508475" hotspotY="0.508772">
+                        <collision-poly>
+                            <point x="0.0169492" y="0.0175439" />
+                            <point x="0.491525" y="0" />
+                            <point x="0.983051" y="0.0175439" />
+                            <point x="1" y="0.491228" />
+                            <point x="0.983051" y="0.982456" />
+                            <point x="0.491525" y="1" />
+                            <point x="0.0338983" y="0.964912" />
+                            <point x="0" y="0.491228" />
+                        </collision-poly>
+                    </frame>
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="ConfButton" sid="400">
+            <plugin id="Sprite" />
+            <behaviors>
+                <behavior-type name="DragDrop" sid="405">
+                    <behavior id="DragnDrop" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder expanded="1">
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="401" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.509804" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="LstTiles" sid="411">
+            <plugin id="List" />
+        </object-type>
+        <object-type name="LblTiles" sid="412">
+            <plugin id="Text" />
+        </object-type>
+        <object-type name="LblOptions" sid="413">
+            <plugin id="Text" />
+        </object-type>
+        <object-type name="LstImg" sid="414">
+            <plugin id="List" />
+        </object-type>
+        <object-type name="LblImg" sid="415">
+            <plugin id="Text" />
+        </object-type>
+        <object-type name="AJAX" sid="443">
+            <plugin id="AJAX" />
+        </object-type>
+        <object-type global="1" name="XML" sid="444">
+            <plugin id="XML" />
+        </object-type>
+        <object-type global="1" name="Descriptions" sid="445">
+            <plugin id="Dictionary" />
+        </object-type>
+        <object-type name="Description" sid="467">
+            <plugin id="TextBox" />
+        </object-type>
+        <object-type name="PieceDesc" sid="485">
+            <plugin id="Text" />
+        </object-type>
+        <object-type name="Text2" sid="6590224467963231">
+            <plugin id="Text" />
+        </object-type>
+        <object-type name="TiledBackground" sid="5960503563542762">
+            <plugin id="TiledBg" />
+            <texture />
+        </object-type>
+        <object-type global="1" name="URIs" sid="2737288673242173">
+            <plugin id="Dictionary" />
+        </object-type>
+        <object-type name="UriButton" sid="7742938096604558">
+            <plugin id="Button" />
+        </object-type>
+        <object-type name="Browser" sid="2492109210663043">
+            <plugin id="Browser" />
+        </object-type>
+        <object-type name="ShadowButton" sid="9292957112739007">
+            <plugin id="Sprite" />
+            <instance-variables>
+                <instance-variable name="reenable" sid="2737522564658463" type="number" />
+            </instance-variables>
+            <behaviors>
+                <behavior-type name="DragDrop" sid="3241686900323932">
+                    <behavior id="DragnDrop" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder expanded="1">
+                <animation framecount="1" loop="0" name="ShadowOff" pingpong="0" repeatcount="1" repeatto="0" sid="3387526533859473" speed="5">
+                    <frame duration="1" hotspotX="0.508772" hotspotY="0.507246" />
+                </animation>
+                <animation framecount="1" loop="0" name="ShadowOn" pingpong="0" repeatcount="1" repeatto="0" sid="2557890414896794" speed="5">
+                    <frame duration="1" hotspotX="0.508772" hotspotY="0.507246">
+                        <collision-poly>
+                            <point x="0.0877193" y="0.0724638" />
+                            <point x="0.894737" y="0.0869565" />
+                            <point x="1" y="0.492754" />
+                            <point x="0.982456" y="0.985507" />
+                            <point x="0" y="1" />
+                            <point x="0.0175439" y="0.492754" />
+                        </collision-poly>
+                    </frame>
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="TimeText" sid="3983081905166592">
+            <plugin id="Text" />
+        </object-type>
+        <object-type name="Audio" sid="2950479461894023">
+            <plugin id="Audio" />
+        </object-type>
+    </object-folder>
+    <families />
+    <layout-folder expanded="1">
+        <layout>Game.xml</layout>
+        <layout>Loading.xml</layout>
+        <layout>Menu.xml</layout>
+    </layout-folder>
+    <event-folder expanded="1">
+        <event-sheet>Game sheet.xml</event-sheet>
+        <event-sheet>Loading sheet.xml</event-sheet>
+        <event-sheet>Option sheet.xml</event-sheet>
+    </event-folder>
+    <global-instances>
+        <global-instance type="AJAX" uid="19" />
+        <global-instance type="Browser" uid="29" />
+        <global-instance type="Audio" uid="34">
+            <properties>
+                <timescale-audio>Off</timescale-audio>
+                <positioned-audio></positioned-audio>
+                <panning-model>HRTF</panning-model>
+                <distance-model>Inverse</distance-model>
+                <listener-z-height>600</listener-z-height>
+                <reference-distance>600</reference-distance>
+                <maximum-distance>10000</maximum-distance>
+                <roll-off-factor>1</roll-off-factor>
+                <speed-of-sound>5000</speed-of-sound>
+                <doppler-factor>1</doppler-factor>
+            </properties>
+        </global-instance>
+    </global-instances>
+    <sounds-folder expanded="1">
+        <file name="clic-clac.m4a" />
+        <file name="clic-clac.ogg" />
+    </sounds-folder>
+    <music-folder expanded="1" />
+    <files-folder expanded="1">
+        <file name="spring_flowers.jpg" />
+        <file name="polignano.jpg" />
+        <file name="lista_xml.xml" />
+    </files-folder>
+</c2project>

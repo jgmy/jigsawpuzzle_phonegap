@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="josemoya.blogspot.com.jigsaw.phone" version="1.4.0.4">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="josemoya.blogspot.com.puzzle.phone" version="1.4.0.4">
 
 	<name>JigSawPuzzle</name>
 	<description>A jigsaw puzzle</description>
